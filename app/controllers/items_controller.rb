@@ -1,4 +1,6 @@
 class ItemsController < ApplicationController
+  before_action :authenticate_user!, only: [:new]
+
   def index
   end
 
@@ -7,9 +9,9 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(message_params)
+    @item = Item.new(item_params)
     if @item.save
-      redirect_to :index
+      redirect_to action: 'index'
     else
       render :new
     end
@@ -18,7 +20,7 @@ class ItemsController < ApplicationController
 
 private
 
-def message_params
-  params.require(:message).permit(:image).merge(user_id: current_user.id)
+def item_params
+  params.require(:item).permit(:image, :product_name, :description, :price, :category_id, :status_id, :burden_id, :delivery_id, :days_delivery_id).merge(user_id: current_user.id)
 end
 end
