@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit]
   before_action :move_to_index, only: [:edit, :update, :destroy]
+  before_action :sold_out_item, only: [:edit]
   before_action :set_item, only: [:show, :edit, :update]
 
   def index
@@ -54,5 +55,10 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def sold_out_item
+    item = Item.find(params[:id])
+    redirect_to action: :index if item.purchase.present?
   end
 end
