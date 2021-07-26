@@ -1,6 +1,8 @@
 class PurchasesController < ApplicationController
+  before_action :set_item, only: [:index,:sold_out_item]
+  before_action :sold_out_item, only: [:index]
+
   def index
-    @item = Item.find(params[:item_id])
     @purchase_address = PurchaseAddress.new
   end
 
@@ -27,4 +29,13 @@ class PurchasesController < ApplicationController
     params.require(:purchase_address).permit(:postal_code, :delivery_id, :municipality, :address, :building_name, :phone_number).merge(user_id: current_user.id, item_id: @item, token: params[:token])
   end
 
+  def sold_out_item
+    if @item.purchase.present?
+      redirect_to root_path
+    end
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
 end
