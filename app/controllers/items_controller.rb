@@ -49,8 +49,7 @@ class ItemsController < ApplicationController
   end
 
   def move_to_index
-    item = Item.find(params[:id])
-    redirect_to action: :index unless user_signed_in? && item.user.id == current_user.id
+    redirect_to action: :index unless user_signed_in? && @item.user.id == current_user.id
   end
 
   def set_item
@@ -58,7 +57,6 @@ class ItemsController < ApplicationController
   end
 
   def sold_out_item
-    item = Item.find(params[:id])
-    redirect_to action: :index if item.purchase.present?
+    redirect_to action: :index if @item.purchase.present?
   end
 end
