@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :purchase_address do
     postal_code   { '124-4567' }
-    delivery_id   { '2' }
+    delivery_id   { 2 }
     address       { '1-1' }
     municipality  { '渋谷区' }
     building_name { 'ビル' }

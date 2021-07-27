@@ -43,7 +43,7 @@ RSpec.describe PurchaseAddress, type: :model do
         expect(@purchase_address.errors.full_messages).to include("Delivery can't be blank")
       end
       it 'delivery_idが1では購入できない' do
-        @purchase_address.delivery_id = '1'
+        @purchase_address.delivery_id = 1
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Delivery can't be blank")
       end
@@ -94,6 +94,16 @@ RSpec.describe PurchaseAddress, type: :model do
         @purchase_address.token = nil
         @purchase_address.valid?
         expect(@purchase_address.errors.full_messages).to include("Token can't be blank")
+      end
+      it 'usre_idが空では購入できないこと' do
+        @purchase_address.user_id = nil
+        @purchase_address.valid?
+        expect(@purchase_address.errors.full_messages).to include("User can't be blank")
+      end
+      it 'item_idが空では購入できないこと' do
+        @purchase_address.item_id = nil
+        @purchase_address.valid?
+        expect(@purchase_address.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
